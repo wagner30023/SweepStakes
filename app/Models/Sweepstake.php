@@ -6,21 +6,27 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
+use App\Models\User;
+use App\Models\Participant;
+use App\Traits\HasUUID;
 
-class Sweeptake extends Model
+class Sweepstake extends Model
 {
     use HasFactory;
+    use HasUUID;
 
     protected $fillable = [
-        "id",
-        "numberif_winners",
+        "user_id",
+        "number_of_winnners",
         "end_date",
         "description",
     ];
 
+
     protected $keyType = "string";
 
     public $incrementing = false;
+
 
     public static function boot()
     {
@@ -28,7 +34,7 @@ class Sweeptake extends Model
 
         static::creating(function(Model $model){
             if(empty($model->id)){
-                $model->id = Str::uuid()->toString();
+                $model->id = Str::uuid();
             }
         });
     }
@@ -36,5 +42,11 @@ class Sweeptake extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+
+    public function participants()
+    {
+        return $this->hasMany(Participant::class);
     }
 }

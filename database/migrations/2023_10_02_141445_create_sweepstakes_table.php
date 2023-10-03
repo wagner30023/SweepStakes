@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer("number_of_winnners")->default(1);
             $table->dateTime("end_date")->nullable(); 
             $table->text("description")->nullable();
+            $table->timestamps();
         });
     }
 

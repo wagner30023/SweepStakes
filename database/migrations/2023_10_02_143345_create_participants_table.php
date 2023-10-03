@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('sweepstakes', function (Blueprint $table) {
-            $table->uuid("id")->primary();
-            $table->foreignId('user_id')->constrained();
-            $table->integer("number_of_winnners")->default(1);
-            $table->dateTime("end_date")->nullable(); 
-            $table->text("description")->nullable();
+        Schema::create('participants', function (Blueprint $table) {
+            $table->id();
+            $table->foreignUuid("sweepstake_id");
+            $table->string("name");
+            $table->string("email");
+            $table->dateTime('awarded_at')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sweepstakes');
+        Schema::dropIfExists('participants');
     }
 };
